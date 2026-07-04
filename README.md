@@ -26,62 +26,55 @@ Unlike traditional password strength meters that merely count character types (e
 ## 🖼️ Project Showcase
 
 <div align="center">
-  
-  <!-- Active View 1: Password Analyzer -->
-  <div id="analyzer-view">
-    <br/>
-    <img src="public/screenshot-analyze.png" width="100%" alt="Password Analyzer & Hardening Engine" style="border-radius: 8px; border: 1px solid #333;" />
-    <br/><br/>
-    <p><em>Password Strength Analyzer and AI Hardening Interface</em></p>
-    
-    <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;" />
-    
-    <table width="100%">
-      <tr>
-        <td align="center" width="50%" style="border: 2px solid #a78bfa; border-radius: 6px; padding: 12px; background: rgba(167, 139, 250, 0.05);">
-          <a href="#analyzer-view" style="text-decoration: none; color: inherit; display: block;">
-            <img src="public/screenshot-analyze.png" width="100%" alt="Analyzer Thumbnail" style="border-radius: 4px;" />
-            <br/><strong>Password Analyzer</strong>
-          </a>
-        </td>
-        <td align="center" width="50%" style="border: 1px solid #222; border-radius: 6px; padding: 12px;">
-          <a href="#generator-view" style="text-decoration: none; color: inherit; display: block;">
-            <img src="public/screenshot-generator.png" width="100%" alt="Generator Thumbnail" style="border-radius: 4px;" />
-            <br/><span style="color: #888;">AI Generator</span>
-          </a>
-        </td>
-      </tr>
-    </table>
-  </div>
 
-  <br/><br/>
+**🔍 Landing & Hero**
 
-  <!-- Active View 2: AI Generator -->
-  <div id="generator-view">
-    <br/>
-    <img src="public/screenshot-generator.png" width="100%" alt="Controlled AI Generator" style="border-radius: 8px; border: 1px solid #333;" />
-    <br/><br/>
-    <p><em>Controlled AI Generative Engine & Temperature Configurator</em></p>
-    
-    <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;" />
-    
-    <table width="100%">
-      <tr>
-        <td align="center" width="50%" style="border: 1px solid #222; border-radius: 6px; padding: 12px;">
-          <a href="#analyzer-view" style="text-decoration: none; color: inherit; display: block;">
-            <img src="public/screenshot-analyze.png" width="100%" alt="Analyzer Thumbnail" style="border-radius: 4px;" />
-            <br/><span style="color: #888;">Password Analyzer</span>
-          </a>
-        </td>
-        <td align="center" width="50%" style="border: 2px solid #a78bfa; border-radius: 6px; padding: 12px; background: rgba(167, 139, 250, 0.05);">
-          <a href="#generator-view" style="text-decoration: none; color: inherit; display: block;">
-            <img src="public/screenshot-generator.png" width="100%" alt="Generator Thumbnail" style="border-radius: 4px;" />
-            <br/><strong>AI Generator</strong>
-          </a>
-        </td>
-      </tr>
-    </table>
-  </div>
+<img src="public/01.png" width="90%" alt="PassIntel AI — Hero Landing Screen" />
+
+*The AI-Powered Security Intelligence landing page with mode selection and live stats strip.*
+
+<br/>
+
+---
+
+**🧪 Password Analyzer + Heatmap**
+
+<img src="public/02.png" width="90%" alt="Password Analyzer with Character Heatmap and Hardening Engine" />
+
+*Character-by-character predictability heatmap, Shannon Entropy ring, security metrics, and AI-hardened variant suggestions.*
+
+<br/>
+
+---
+
+**⚙️ AI Generator (Hero View)**
+
+<img src="public/03.png" width="90%" alt="AI Generator Tab — Hero View" />
+
+*The AI Generator tab with temperature and character-type controls.*
+
+<br/>
+
+---
+
+**📊 Generator Controls + Entropy Output**
+
+<img src="public/04.png" width="90%" alt="Generator Controls with Entropy Score and Crack Time" />
+
+*Temperature-scaled generation results with entropy score, crack time estimate, and "How It Works" steps.*
+
+<br/>
+
+---
+
+**Navigate the screens:**
+
+| | Screenshot | Description |
+|:---:|:---:|:---|
+| 1️⃣ | [Hero Landing](#-landing--hero) | AI-powered hero, mode switcher, and key stats |
+| 2️⃣ | [Password Analyzer](#-password-analyzer--heatmap) | Heatmap, entropy ring, strength bar, and hardening suggestions |
+| 3️⃣ | [AI Generator Hero](#️-ai-generator-hero-view) | Generator tab overview |
+| 4️⃣ | [Generator Output](#-generator-controls--entropy-output) | Controls, generated password, entropy score, crack time |
 
 </div>
 
