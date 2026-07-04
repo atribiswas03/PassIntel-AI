@@ -25,12 +25,12 @@ Unlike traditional password strength meters that merely count character types (e
 
 ## 🖼️ Project Showcase
 
-> **🖱️ [Open Interactive Showcase →](https://passintel-ai.vercel.app/showcase.html)**  
+> **🖱️ [Open Interactive Showcase →](https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html)**  
 > Click any thumbnail to change the main view. Keyboard ← → navigation supported.
 
 <div align="center">
 
-<a href="https://passintel-ai.vercel.app/showcase.html">
+<a href="https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html">
   <img src="public/01.png" width="90%" alt="PassIntel AI — Hero Landing Screen" />
 </a>
 
@@ -41,25 +41,25 @@ Unlike traditional password strength meters that merely count character types (e
 <table>
   <tr>
     <td align="center">
-      <a href="https://passintel-ai.vercel.app/showcase.html#screen-1">
+      <a href="https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html">
         <img src="public/01.png" width="100%" alt="Landing & Hero" />
       </a>
       <br/><strong>Landing & Hero</strong>
     </td>
     <td align="center">
-      <a href="https://passintel-ai.vercel.app/showcase.html#screen-2">
+      <a href="https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html">
         <img src="public/02.png" width="100%" alt="Analyzer + Heatmap" />
       </a>
       <br/><strong>Analyzer + Heatmap</strong>
     </td>
     <td align="center">
-      <a href="https://passintel-ai.vercel.app/showcase.html#screen-3">
+      <a href="https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html">
         <img src="public/03.png" width="100%" alt="AI Generator" />
       </a>
       <br/><strong>AI Generator</strong>
     </td>
     <td align="center">
-      <a href="https://passintel-ai.vercel.app/showcase.html#screen-4">
+      <a href="https://htmlpreview.github.io/?https://github.com/atribiswas03/PassIntel-AI/blob/main/public/showcase.html">
         <img src="public/04.png" width="100%" alt="Generator Output" />
       </a>
       <br/><strong>Generator Output</strong>
