@@ -1,6 +1,10 @@
-# 🛡️ PassIntel AI
-
 <div align="center">
+
+<img src="public/Logo.png" width="160" alt="PassIntel AI Logo" />
+
+# PassIntel AI
+
+**Next-Generation Client-Side Password Intelligence Platform**
 
 [![React](https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript%206-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
