@@ -25,56 +25,47 @@ Unlike traditional password strength meters that merely count character types (e
 
 ## 🖼️ Project Showcase
 
+> **🖱️ [Open Interactive Showcase →](https://passintel-ai.vercel.app/showcase.html)**  
+> Click any thumbnail to change the main view. Keyboard ← → navigation supported.
+
 <div align="center">
 
-**🔍 Landing & Hero**
+<a href="https://passintel-ai.vercel.app/showcase.html">
+  <img src="public/01.png" width="90%" alt="PassIntel AI — Hero Landing Screen" />
+</a>
 
-<img src="public/01.png" width="90%" alt="PassIntel AI — Hero Landing Screen" />
-
-*The AI-Powered Security Intelligence landing page with mode selection and live stats strip.*
-
-<br/>
-
----
-
-**🧪 Password Analyzer + Heatmap**
-
-<img src="public/02.png" width="90%" alt="Password Analyzer with Character Heatmap and Hardening Engine" />
-
-*Character-by-character predictability heatmap, Shannon Entropy ring, security metrics, and AI-hardened variant suggestions.*
+*Click the image or a thumbnail below to open the full interactive showcase.*
 
 <br/>
 
----
-
-**⚙️ AI Generator (Hero View)**
-
-<img src="public/03.png" width="90%" alt="AI Generator Tab — Hero View" />
-
-*The AI Generator tab with temperature and character-type controls.*
-
-<br/>
-
----
-
-**📊 Generator Controls + Entropy Output**
-
-<img src="public/04.png" width="90%" alt="Generator Controls with Entropy Score and Crack Time" />
-
-*Temperature-scaled generation results with entropy score, crack time estimate, and "How It Works" steps.*
-
-<br/>
-
----
-
-**Navigate the screens:**
-
-| | Screenshot | Description |
-|:---:|:---:|:---|
-| 1️⃣ | [Hero Landing](#-landing--hero) | AI-powered hero, mode switcher, and key stats |
-| 2️⃣ | [Password Analyzer](#-password-analyzer--heatmap) | Heatmap, entropy ring, strength bar, and hardening suggestions |
-| 3️⃣ | [AI Generator Hero](#️-ai-generator-hero-view) | Generator tab overview |
-| 4️⃣ | [Generator Output](#-generator-controls--entropy-output) | Controls, generated password, entropy score, crack time |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://passintel-ai.vercel.app/showcase.html#screen-1">
+        <img src="public/01.png" width="100%" alt="Landing & Hero" />
+      </a>
+      <br/><strong>Landing & Hero</strong>
+    </td>
+    <td align="center">
+      <a href="https://passintel-ai.vercel.app/showcase.html#screen-2">
+        <img src="public/02.png" width="100%" alt="Analyzer + Heatmap" />
+      </a>
+      <br/><strong>Analyzer + Heatmap</strong>
+    </td>
+    <td align="center">
+      <a href="https://passintel-ai.vercel.app/showcase.html#screen-3">
+        <img src="public/03.png" width="100%" alt="AI Generator" />
+      </a>
+      <br/><strong>AI Generator</strong>
+    </td>
+    <td align="center">
+      <a href="https://passintel-ai.vercel.app/showcase.html#screen-4">
+        <img src="public/04.png" width="100%" alt="Generator Output" />
+      </a>
+      <br/><strong>Generator Output</strong>
+    </td>
+  </tr>
+</table>
 
 </div>
 
