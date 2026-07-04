@@ -1,0 +1,288 @@
+/* App.css — all component-specific styles merged here for clarity */
+
+/* Force full-width layout resets */
+html, body, #root {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+/* Strength bar */
+.strength-bar-wrap {
+  margin-top: 20px;
+}
+
+.strength-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.strength-bar-track {
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.strength-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease;
+  box-shadow: 0 0 12px currentColor;
+}
+
+/* Entropy ring */
+.entropy-ring-wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.entropy-ring-wrap svg {
+  flex-shrink: 0;
+}
+
+.entropy-ring-info {
+  flex: 1;
+}
+
+.entropy-ring-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.entropy-ring-value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.entropy-ring-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Gen button */
+.gen-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--purple) 0%, #6d28d9 50%, var(--cyan-light) 100%);
+  background-size: 200% auto;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 24px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+  margin-top: 28px;
+}
+
+.gen-btn:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(139,92,246,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.gen-btn:active { transform: translateY(1px); }
+
+/* Hardening run btn */
+.harden-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 28px;
+  border: 1px solid rgba(6,182,212,0.3);
+  border-radius: var(--radius-md);
+  background: rgba(6,182,212,0.07);
+  color: var(--cyan-light);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 20px;
+}
+
+.harden-btn:hover {
+  background: rgba(6,182,212,0.13);
+  border-color: rgba(6,182,212,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(6,182,212,0.12);
+}
+
+/* Copied flash */
+@keyframes flash-in {
+  0%   { opacity: 0; transform: scale(0.85); }
+  60%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.copied-badge {
+  animation: flash-in 0.25s ease;
+}
+
+/* Copy btn green flash */
+.icon-btn.success {
+  color: var(--green) !important;
+}
+
+/* PWA install banner */
+.pwa-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: rgba(139,92,246,0.07);
+  border: 1px solid rgba(139,92,246,0.22);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+}
+
+.pwa-banner-text {
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.pwa-banner-text strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.pwa-install-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(139,92,246,0.35);
+  white-space: nowrap;
+}
+
+.pwa-install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(139,92,246,0.5);
+}
+
+/* Reveal wrapper animation */
+.section-reveal {
+  animation: section-in 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes section-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Harden button (inline in card header) */
+.harden-btn-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 9px 20px;
+  border: 1px solid rgba(6,182,212,0.35);
+  border-radius: var(--radius-sm);
+  background: rgba(6,182,212,0.08);
+  color: var(--cyan-light);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+}
+
+.harden-btn-inline:hover {
+  background: rgba(6,182,212,0.16);
+  border-color: rgba(6,182,212,0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(6,182,212,0.15);
+}
+
+/* ── 3-column suggestions grid (full-width hardening engine) */
+.suggestions-grid-wide {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 1100px) {
+  .suggestions-grid-wide { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 680px) {
+  .suggestions-grid-wide { grid-template-columns: 1fr; }
+}
+
+/* ── Hardening idle/empty states */
+.hardening-empty {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.hardening-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: rgba(16,185,129,0.08);
+  color: var(--green);
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.hardening-empty-text strong { color: var(--text-primary); }
+
+.hardening-idle { padding: 4px 0; }
+
+.hardening-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0;
+}
+

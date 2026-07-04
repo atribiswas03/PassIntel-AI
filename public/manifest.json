@@ -1,0 +1,16 @@
+{
+  "short_name": "PassIntel AI",
+  "name": "PassIntel AI - Password Intelligence Suite",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0a0b10",
+  "theme_color": "#8b5cf6",
+  "display": "standalone",
+  "orientation": "portrait"
+}
