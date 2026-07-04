@@ -23,34 +23,66 @@ Unlike traditional password strength meters that merely count character types (e
 
 ---
 
-## 📸 Application Showcase
+## 🖼️ Project Showcase
 
 <div align="center">
-  <p>Use the navigation buttons below to explore the screenshots of PassIntel AI.</p>
-
-  <!-- Slide 1 -->
-  <div id="screenshot-1" style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
-    <h3>🔍 1. Password Analyzer & Hardening Engine</h3>
-    <p>Type any password to get character-by-character prediction probabilities, overall entropy metrics, and smart hardening recommendation suggestions.</p>
-    <img src="public/screenshot-analyze.png" width="90%" alt="Password Analyzer & Hardening Engine Screen" style="border-radius: 6px; border: 1px solid #333;" />
+  
+  <!-- Active View 1: Password Analyzer -->
+  <div id="analyzer-view">
+    <br/>
+    <img src="public/screenshot-analyze.png" width="100%" alt="Password Analyzer & Hardening Engine" style="border-radius: 8px; border: 1px solid #333;" />
     <br/><br/>
-    <div>
-      <span style="color: #666; cursor: not-allowed; margin-right: 15px;">⏮️ Previous</span>
-      <a href="#screenshot-2" style="text-decoration: none; font-weight: bold; color: #a78bfa;">Next (AI Generator) ⏭️</a>
-    </div>
+    <p><em>Password Strength Analyzer and AI Hardening Interface</em></p>
+    
+    <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;" />
+    
+    <table width="100%">
+      <tr>
+        <td align="center" width="50%" style="border: 2px solid #a78bfa; border-radius: 6px; padding: 12px; background: rgba(167, 139, 250, 0.05);">
+          <a href="#analyzer-view" style="text-decoration: none; color: inherit; display: block;">
+            <img src="public/screenshot-analyze.png" width="100%" alt="Analyzer Thumbnail" style="border-radius: 4px;" />
+            <br/><strong>Password Analyzer</strong>
+          </a>
+        </td>
+        <td align="center" width="50%" style="border: 1px solid #222; border-radius: 6px; padding: 12px;">
+          <a href="#generator-view" style="text-decoration: none; color: inherit; display: block;">
+            <img src="public/screenshot-generator.png" width="100%" alt="Generator Thumbnail" style="border-radius: 4px;" />
+            <br/><span style="color: #888;">AI Generator</span>
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <!-- Slide 2 -->
-  <div id="screenshot-2" style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-    <h3>⚙️ 2. Controlled AI Generator Tab</h3>
-    <p>Configure custom length and entropy requirements, adjusting the AI randomness temperature to balance between memorability and complexity.</p>
-    <img src="public/screenshot-generator.png" width="90%" alt="Controlled AI Generator Screen" style="border-radius: 6px; border: 1px solid #333;" />
+  <br/><br/>
+
+  <!-- Active View 2: AI Generator -->
+  <div id="generator-view">
+    <br/>
+    <img src="public/screenshot-generator.png" width="100%" alt="Controlled AI Generator" style="border-radius: 8px; border: 1px solid #333;" />
     <br/><br/>
-    <div>
-      <a href="#screenshot-1" style="text-decoration: none; font-weight: bold; color: #a78bfa; margin-right: 15px;">⏮️ Previous (Analyzer)</a>
-      <span style="color: #666; cursor: not-allowed;">Next ⏭️</span>
-    </div>
+    <p><em>Controlled AI Generative Engine & Temperature Configurator</em></p>
+    
+    <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;" />
+    
+    <table width="100%">
+      <tr>
+        <td align="center" width="50%" style="border: 1px solid #222; border-radius: 6px; padding: 12px;">
+          <a href="#analyzer-view" style="text-decoration: none; color: inherit; display: block;">
+            <img src="public/screenshot-analyze.png" width="100%" alt="Analyzer Thumbnail" style="border-radius: 4px;" />
+            <br/><span style="color: #888;">Password Analyzer</span>
+          </a>
+        </td>
+        <td align="center" width="50%" style="border: 2px solid #a78bfa; border-radius: 6px; padding: 12px; background: rgba(167, 139, 250, 0.05);">
+          <a href="#generator-view" style="text-decoration: none; color: inherit; display: block;">
+            <img src="public/screenshot-generator.png" width="100%" alt="Generator Thumbnail" style="border-radius: 4px;" />
+            <br/><strong>AI Generator</strong>
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
+
 </div>
 
 ---
