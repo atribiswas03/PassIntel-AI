@@ -5,6 +5,7 @@
 [![Vite](https://img.shields.io/badge/Vite-8.0-purple?style=for-the-badge&logo=vite)](https://vite.dev)
 [![PWA](https://img.shields.io/badge/PWA-Offline--Ready-green?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-passintel--ai.vercel.app-a855f7?style=for-the-badge)](https://passintel-ai.vercel.app/)
 
 **PassIntel AI** is a professional, client-side, offline-capable password security platform that uses advanced statistical models and language modeling heuristics to evaluate password security and mutate weak passwords into cryptographically strong, memorable variants. 
 
@@ -76,14 +77,36 @@ Unlike traditional password strength meters that merely count character types (e
 PassIntel AI utilizes three main components working together on the client side:
 
 ```mermaid
-graph TD
-    A[User Input Password] --> B(N-gram Predictability Evaluator)
-    B --> C[Character Heatmap & Metrics]
-    B --> D[Shannon Entropy Calculations]
-    A --> E(AI Hardening Engine)
-    E --> F[7 Mutation Strategies]
-    G[Generator Configuration] --> H(Generative Engine)
-    H --> I[Temperature-Scaled Passwords]
+flowchart TB
+    subgraph INPUT [" "]
+        direction TB
+        PWD(["🔑 User Input Password"])
+    end
+
+    subgraph ANALYZE ["📊 Analyze & Harden Mode"]
+        direction TB
+        NGRAM["N-gram Predictability Evaluator"]
+        HEATMAP["Character Heatmap & Predictability Scores"]
+        ENTROPY["Shannon Entropy Score (bits)"]
+        HARDEN["AI Hardening Engine"]
+        MUTATE["7 Smart Mutation Strategies"]
+    end
+
+    subgraph GENERATE ["⚡ AI Generator Mode"]
+        direction TB
+        CONFIG["Generator Configuration\n(Length, Temperature, Charset)"]
+        ENGINE["Temperature-Scaled Generative Engine"]
+        OUTPUT["Cryptographically Strong Password"]
+    end
+
+    PWD --> NGRAM
+    NGRAM --> HEATMAP
+    NGRAM --> ENTROPY
+    ENTROPY --> HARDEN
+    HARDEN --> MUTATE
+
+    CONFIG --> ENGINE
+    ENGINE --> OUTPUT
 ```
 
 ### 1. The N-Gram Predictability Evaluator
