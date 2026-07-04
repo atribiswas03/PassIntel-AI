@@ -168,7 +168,10 @@ export default function App() {
       <nav>
         <div className="page-wrapper">
           <div className="nav-inner">
-            <div className="nav-logo"><Shield size={22} /> PassIntel AI</div>
+            <div className="nav-logo">
+              <img src="/Logo.png" alt="PassIntel AI Logo" style={{ height: '28px', width: 'auto', display: 'block', borderRadius: '6px' }} />
+              PassIntel AI
+            </div>
             <div className="nav-status">AI Engine Active</div>
           </div>
         </div>
