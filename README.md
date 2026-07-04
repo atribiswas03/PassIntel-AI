@@ -1,11 +1,18 @@
 # 🛡️ PassIntel AI
 
-[![React](https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-8.0-purple?style=for-the-badge&logo=vite)](https://vite.dev)
-[![PWA](https://img.shields.io/badge/PWA-Offline--Ready-green?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
-[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-passintel--ai.vercel.app-a855f7?style=for-the-badge)](https://passintel-ai.vercel.app/)
+<div align="center">
+
+[![React](https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript%206-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite%208-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
+[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-0F9D58?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+[![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/🌐%20%20LIVE%20DEMO%20%20→-passintel--ai.vercel.app-a855f7?style=for-the-badge&labelColor=1e1b4b&color=7c3aed)](https://passintel-ai.vercel.app/)
+
+</div>
 
 **PassIntel AI** is a professional, client-side, offline-capable password security platform that uses advanced statistical models and language modeling heuristics to evaluate password security and mutate weak passwords into cryptographically strong, memorable variants. 
 
