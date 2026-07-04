@@ -1,15 +1,25 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   Shield, Cpu, Sparkles, RefreshCw, Copy, Check,
-  AlertTriangle, Info, Lock, Download, Zap, Eye,
-  BarChart3, Brain, ChevronRight, FlaskConical
+  AlertTriangle, Info, Lock, Download, Zap, Eye, EyeOff,
+  BarChart3, Brain, ChevronRight, FlaskConical, Trash2, Search, Plus, FileText, Database
 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
 import { evaluatePassword } from './ai/evaluator';
 import type { EvaluationResult } from './ai/evaluator';
 import { generateAIPassword } from './ai/generator';
 import { generateMutations } from './ai/mutator';
 import type { MutationOption } from './ai/mutator';
 import './App.css';
+
+export interface SavedPassword {
+  id: string;
+  label: string;
+  password: string;
+  score: number;
+  strengthLabel: string;
+  createdAt: string;
+}
 
 /* ─── helpers ─────────────────────────────────────────────────────── */
 const strengthColor = (pct: number) =>
@@ -98,7 +108,7 @@ function SuggestionCard({ opt }: { opt: MutationOption }) {
 
 /* ─── MAIN APP ─────────────────────────────────────────────────────── */
 export default function App() {
-  const [tab, setTab] = useState<'check' | 'generate'>('check');
+  const [tab, setTab] = useState<'check' | 'generate' | 'vault'>('check');
   const [password, setPassword] = useState('');
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [mutations, setMutations] = useState<MutationOption[]>([]);
@@ -112,6 +122,29 @@ export default function App() {
   const [useSpecial, setUseSpecial] = useState(true);
   const [pwaPrompt, setPwaPrompt] = useState<any>(null);
   const debounceRef = useRef<any>(null);
+
+  // Secure Vault state
+  const [savedPasswords, setSavedPasswords] = useState<SavedPassword[]>(() => {
+    try {
+      const stored = localStorage.getItem('passintel_saved_passwords');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      console.error('Failed to parse saved passwords', e);
+      return [];
+    }
+  });
+  
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [saveLabel, setSaveLabel] = useState('');
+  const [passwordToSave, setPasswordToSave] = useState('');
+  const [scoreToSave, setScoreToSave] = useState(0);
+  const [revealedPasswords, setRevealedPasswords] = useState<Record<string, boolean>>({});
+  const [vaultSearch, setVaultSearch] = useState('');
+
+  // Persist saved passwords
+  useEffect(() => {
+    localStorage.setItem('passintel_saved_passwords', JSON.stringify(savedPasswords));
+  }, [savedPasswords]);
 
   useEffect(() => {
     const handler = (e: Event) => { e.preventDefault(); setPwaPrompt(e); };
@@ -146,6 +179,139 @@ export default function App() {
   const handleHarden = () => {
     if (!password) return;
     setMutations(generateMutations(password));
+  };
+
+  const triggerSave = (pwd: string, score: number) => {
+    setPasswordToSave(pwd);
+    setScoreToSave(score);
+    setSaveLabel('');
+    setSaveModalOpen(true);
+  };
+
+  const confirmSave = () => {
+    if (!saveLabel.trim() || !passwordToSave) return;
+    const newSaved: SavedPassword = {
+      id: crypto.randomUUID(),
+      label: saveLabel.trim(),
+      password: passwordToSave,
+      score: scoreToSave,
+      strengthLabel: strengthLabel(scoreToSave),
+      createdAt: new Date().toISOString()
+    };
+    setSavedPasswords(prev => [newSaved, ...prev]);
+    setSaveModalOpen(false);
+    setSaveLabel('');
+  };
+
+  const deletePassword = (id: string) => {
+    if (confirm('Are you sure you want to delete this saved password?')) {
+      setSavedPasswords(prev => prev.filter(p => p.id !== id));
+    }
+  };
+
+  const toggleReveal = (id: string) => {
+    setRevealedPasswords(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add custom styling & layout to PDF
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(139, 92, 246); // Purple color theme
+    doc.text("PassIntel AI - Secure Vault Report", 14, 20);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 26);
+    
+    // Line separator
+    doc.setDrawColor(226, 232, 240);
+    doc.line(14, 30, 196, 30);
+    
+    // Metadata/Summary metrics
+    const total = savedPasswords.length;
+    const avgScore = total > 0 ? Math.round(savedPasswords.reduce((acc, curr) => acc + curr.score, 0) / total) : 0;
+    
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(15, 23, 42);
+    doc.text("Vault Summary", 14, 42);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85);
+    doc.text(`Total Saved Passwords: ${total}`, 14, 49);
+    doc.text(`Average Strength Score: ${avgScore}/100`, 14, 55);
+    
+    // Warning banner about print security
+    doc.setFillColor(254, 242, 242);
+    doc.rect(14, 62, 182, 12, "F");
+    doc.setTextColor(220, 38, 38);
+    doc.setFont("helvetica", "bold");
+    doc.text("SECURITY NOTICE: Keep this printed document secure. It contains plain-text credentials.", 18, 69);
+
+    // Draw a list/table of passwords
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(15, 23, 42);
+    doc.text("Saved Items", 14, 85);
+    
+    let y = 93;
+    
+    // Headers
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(71, 85, 105);
+    doc.text("Label / Service", 14, y);
+    doc.text("Password", 60, y);
+    doc.text("Strength Score", 140, y);
+    doc.text("Date Saved", 170, y);
+    
+    doc.setDrawColor(148, 163, 184);
+    doc.line(14, y + 2, 196, y + 2);
+    y += 8;
+    
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(15, 23, 42);
+    
+    savedPasswords.forEach((item) => {
+      doc.setFont("courier", "normal");
+      const splitPassword = doc.splitTextToSize(item.password, 75);
+      const lineCount = splitPassword.length;
+      const rowHeight = Math.max(8, lineCount * 5 + 3);
+
+      if (y + rowHeight > 280) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(15, 23, 42);
+      doc.text(item.label, 14, y);
+      
+      doc.setFont("courier", "normal");
+      doc.setTextColor(30, 41, 59);
+      doc.text(splitPassword, 60, y);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(71, 85, 105);
+      doc.text(`${item.score}/100`, 140, y);
+      
+      const dateStr = new Date(item.createdAt).toLocaleDateString();
+      doc.text(dateStr, 170, y);
+      
+      doc.setDrawColor(241, 245, 249);
+      doc.line(14, y + rowHeight - 6, 196, y + rowHeight - 6);
+      y += rowHeight;
+    });
+    
+    doc.save(`passintel_vault_export_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
   const installPwa = () => {
@@ -196,6 +362,9 @@ export default function App() {
             </button>
             <button className={`mode-btn ${tab === 'generate' ? 'active' : ''}`} onClick={() => setTab('generate')} id="tab-generate">
               <Sparkles size={16} /> AI Generator
+            </button>
+            <button className={`mode-btn ${tab === 'vault' ? 'active' : ''}`} onClick={() => setTab('vault')} id="tab-vault">
+              <Lock size={16} /> Secure Vault ({savedPasswords.length})
             </button>
           </div>
           <div className="stats-strip">
@@ -294,6 +463,9 @@ export default function App() {
                         }} />
                       </div>
                     </div>
+                    <button className="harden-btn mt-4" style={{ borderColor: 'var(--purple)', background: 'rgba(139,92,246,0.08)', color: 'var(--purple-light)' }} onClick={() => triggerSave(password, result.strengthPercent)}>
+                      <Lock size={14} style={{ marginRight: 8 }} /> Save to Secure Vault
+                    </button>
                   </>
                 ) : (
                   <div className="empty-state">
@@ -544,9 +716,148 @@ export default function App() {
                       <Info size={15} style={{ color: 'var(--cyan)', flexShrink: 0 }} />
                       <span>{aiInsight(genResult)}</span>
                     </div>
+                    <button className="harden-btn mt-4" style={{ borderColor: 'var(--purple)', background: 'rgba(139,92,246,0.08)', color: 'var(--purple-light)' }} onClick={() => triggerSave(genPwd, genResult.strengthPercent)}>
+                      <Lock size={14} style={{ marginRight: 8 }} /> Save to Secure Vault
+                    </button>
                   </>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════
+            SECURE VAULT TAB
+        ════════════════════════════════════════════ */}
+        {tab === 'vault' && (
+          <div className="section-reveal">
+            <div className="card">
+              <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div className="card-title-icon purple"><Database size={18} /></div>
+                  Secure Local Vault
+                </div>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  {savedPasswords.length > 0 && (
+                    <button className="harden-btn-inline" onClick={handleExportPDF} style={{ borderColor: 'var(--purple-light)', background: 'rgba(139,92,246,0.1)', color: 'var(--purple-light)' }}>
+                      <FileText size={14} style={{ marginRight: 6 }} /> Export Vault (PDF)
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="vault-actions" style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <div className="search-wrapper" style={{ flex: 1, minWidth: '240px', position: 'relative' }}>
+                  <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                  <input
+                    type="text"
+                    placeholder="Search saved passwords by label..."
+                    value={vaultSearch}
+                    onChange={e => setVaultSearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px 12px 42px',
+                      background: 'rgba(0, 0, 0, 0.3)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--text-primary)',
+                      fontSize: '0.9rem',
+                      outline: 'none'
+                    }}
+                  />
+                </div>
+              </div>
+
+              {savedPasswords.length === 0 ? (
+                <div className="empty-state" style={{ padding: '40px 0' }}>
+                  <Database size={48} style={{ margin: '0 auto 16px', opacity: 0.2, color: 'var(--purple-light)' }} />
+                  <p>Your local vault is empty.</p>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+                    Generate a password or enter one in the analyzer, then click "Save to Secure Vault" to list it here.
+                  </p>
+                </div>
+              ) : (
+                <div className="vault-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {savedPasswords
+                    .filter(p => p.label.toLowerCase().includes(vaultSearch.toLowerCase()))
+                    .map(p => {
+                      const revealed = !!revealedPasswords[p.id];
+                      return (
+                        <div key={p.id} className="vault-item" style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '16px',
+                          padding: '16px 20px',
+                          background: 'rgba(255, 255, 255, 0.015)',
+                          border: '1px solid var(--border)',
+                          borderRadius: 'var(--radius-md)',
+                          flexWrap: 'wrap',
+                          transition: 'all 0.2s ease'
+                        }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1, minWidth: '150px' }}>
+                            <span style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>{p.label}</span>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                              Saved {new Date(p.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 2, minWidth: '240px', background: 'rgba(0,0,0,0.2)', padding: '8px 12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                            <span style={{
+                              fontFamily: 'var(--mono)',
+                              fontSize: '1rem',
+                              letterSpacing: revealed ? 'normal' : '0.15em',
+                              wordBreak: 'break-all',
+                              flex: 1,
+                              color: revealed ? 'var(--text-primary)' : 'var(--text-muted)'
+                            }}>
+                              {revealed ? p.password : '••••••••••••••••'}
+                            </span>
+                            <button
+                              className="icon-btn"
+                              onClick={() => toggleReveal(p.id)}
+                              title={revealed ? "Hide Password" : "Show Password"}
+                              style={{ padding: '4px' }}
+                            >
+                              {revealed ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
+                            <button
+                              className="icon-btn"
+                              onClick={() => {
+                                navigator.clipboard.writeText(p.password).catch(() => {});
+                                alert('Password copied to clipboard!');
+                              }}
+                              title="Copy Password"
+                              style={{ padding: '4px' }}
+                            >
+                              <Copy size={16} />
+                            </button>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'flex-end', minWidth: '120px' }}>
+                            <span className="tag" style={{
+                              background: `${strengthColor(p.score)}15`,
+                              color: strengthColor(p.score),
+                              borderColor: `${strengthColor(p.score)}30`,
+                              border: '1px solid',
+                              fontWeight: 700
+                            }}>
+                              {p.score}/100
+                            </span>
+                            <button
+                              className="icon-btn"
+                              onClick={() => deletePassword(p.id)}
+                              title="Delete Item"
+                              style={{ color: 'var(--red)', padding: '6px' }}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -605,6 +916,64 @@ export default function App() {
             ))}
           </div>
         </div>
+
+        {/* Save to Vault Modal Overlay */}
+        {saveModalOpen && (
+          <div className="save-modal-overlay" style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(2, 4, 8, 0.8)',
+            backdropFilter: 'blur(12px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            animation: 'fade-in 0.2s ease'
+          }}>
+            <div className="card" style={{
+              width: '95%',
+              maxWidth: '440px',
+              padding: '28px',
+              boxShadow: '0 24px 64px rgba(0,0,0,0.8), 0 0 0 1px rgba(139,92,246,0.2)'
+            }}>
+              <div className="card-title" style={{ borderBottom: 'none', marginBottom: '16px', paddingBottom: 0 }}>
+                <div className="card-title-icon purple"><Database size={18} /></div>
+                Save to Vault
+              </div>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: 1.5 }}>
+                Give this password a label or service name (e.g. Google, GitHub, Work PC) to save it locally.
+              </p>
+              <div style={{ marginBottom: '20px' }}>
+                <label className="field-label">Label / Service Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. My GitHub Account"
+                  value={saveLabel}
+                  onChange={e => setSaveLabel(e.target.value)}
+                  className="text-input"
+                  style={{ fontSize: '1rem', padding: '12px 14px' }}
+                  autoFocus
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') confirmSave();
+                    if (e.key === 'Escape') setSaveModalOpen(false);
+                  }}
+                />
+              </div>
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px 16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '4px' }}>Password</div>
+                <div style={{ fontFamily: 'var(--mono)', wordBreak: 'break-all', fontSize: '0.95rem' }}>{passwordToSave}</div>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                <button className="harden-btn-inline" onClick={() => setSaveModalOpen(false)} style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'transparent' }}>
+                  Cancel
+                </button>
+                <button className="pwa-install-btn" onClick={confirmSave} disabled={!saveLabel.trim()} style={{ opacity: saveLabel.trim() ? 1 : 0.5, cursor: saveLabel.trim() ? 'pointer' : 'not-allowed' }}>
+                  <Plus size={14} style={{ marginRight: 6 }} /> Save Password
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <footer>

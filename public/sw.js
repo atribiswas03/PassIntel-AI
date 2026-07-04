@@ -31,7 +31,33 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(e.request).then((response) => {
+        // Check if we received a valid response
+        if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+        }
+        
+        // Cache the newly fetched asset dynamically (only for GET requests of app origin or common fonts)
+        const isGet = e.request.method === 'GET';
+        const isSameOrigin = e.request.url.startsWith(self.location.origin);
+        const isGoogleFont = e.request.url.includes('fonts.googleapis.com') || e.request.url.includes('fonts.gstatic.com');
+        
+        if (isGet && (isSameOrigin || isGoogleFont)) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, responseToCache);
+          });
+        }
+        return response;
+      }).catch(() => {
+        // Offline fallback if request fails (e.g. navigation)
+        if (e.request.mode === 'navigate') {
+          return caches.match('/');
+        }
+      });
     })
   );
 });
